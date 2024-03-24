@@ -1,6 +1,6 @@
 # Visual Novel Tool
 
-A tool.
+A tool. Here is the [design document](https://docs.google.com/document/d/1c9EcKns8WL8iyfcrWb80bG8OrV2IxMGFhXCNyPbILN8/edit#heading=h.8btjmsmq11nx).
 
 ## Tools
 
