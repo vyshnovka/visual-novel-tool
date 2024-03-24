@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
 public class StoryTeller : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class StoryTeller : MonoBehaviour
     {
         lineToDisplay = plot.Lines[lineIndex];
 
-        StartCoroutine(DelayUtility.TimedEvent(() => {
+        StartCoroutine(Delay.TimedEvent(() => {
             textCoroutine = StartCoroutine(TextWritter(lineToDisplay));
             isTyping = true;
         }, 0.2f));
