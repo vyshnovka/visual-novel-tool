@@ -6,7 +6,7 @@ using Utility;
 public class StoryTeller : MonoBehaviour
 {
     [SerializeField]
-    private Plot plot;
+    private Dialogue dialogue;
 
     [SerializeField]
     private Text text;
@@ -24,12 +24,7 @@ public class StoryTeller : MonoBehaviour
 
     void Start()
     {
-        lineToDisplay = plot.Lines[lineIndex];
-
-        StartCoroutine(Delay.TimedEvent(() => {
-            textCoroutine = StartCoroutine(TextWritter(lineToDisplay));
-            isTyping = true;
-        }, 0.2f));
+        StartDialogue();
     }
 
     void Update()
@@ -46,6 +41,16 @@ public class StoryTeller : MonoBehaviour
         }
     }
 
+    private void StartDialogue()
+    {
+        lineToDisplay = dialogue.Lines[lineIndex];
+
+        StartCoroutine(Delay.TimedEvent(() => {
+            textCoroutine = StartCoroutine(TextWritter(lineToDisplay));
+            isTyping = true;
+        }, 0.2f));
+    }
+
     private IEnumerator TextWritter(string line)
     {
         lineToDisplay = line;
@@ -53,7 +58,7 @@ public class StoryTeller : MonoBehaviour
 
         for (int i = 0; i <= line.Length; i++)
         {
-            partToDisplay = line.Substring(0, i);
+            partToDisplay = line[..i];
             text.text = partToDisplay;
 
             yield return new WaitForSeconds(timeToWait);

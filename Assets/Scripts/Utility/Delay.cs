@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace Utility
 {
+    //? Not nice that it requires a coroutine to start to call these methods.
     public static class Delay
     {
         /// <summary>Invoke action after given <paramref name="delay"/> in seconds.</summary>
