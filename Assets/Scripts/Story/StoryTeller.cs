@@ -3,68 +3,71 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utility;
 
-public class StoryTeller : MonoBehaviour
+namespace Story
 {
-    [SerializeField]
-    private Dialogue dialogue;
-
-    [SerializeField]
-    private Text text;
-
-    [SerializeField]
-    [Range(0, 5)]
-    private float timeToWait = 0.1f;
-
-    private int lineIndex = 0;
-    private string lineToDisplay = "";
-    private string partToDisplay = "";
-
-    private Coroutine textCoroutine;
-    private bool isTyping = true;
-
-    void Start()
+    public class StoryTeller : MonoBehaviour
     {
-        StartDialogue();
-    }
+        [SerializeField]
+        private Dialogue dialogue;
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
+        [SerializeField]
+        private Text text;
+
+        [SerializeField]
+        [Range(0, 5)]
+        private float timeToWait = 0.1f;
+
+        private int lineIndex = 0;
+        private string lineToDisplay = "";
+        private string partToDisplay = "";
+
+        private Coroutine textCoroutine;
+        private bool isTyping = true;
+
+        void Start()
         {
-            if (isTyping)
-            {
-                isTyping = false;
-                StopCoroutine(textCoroutine);
+            StartDialogue();
+        }
 
-                text.text = lineToDisplay;
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (isTyping)
+                {
+                    isTyping = false;
+                    StopCoroutine(textCoroutine);
+
+                    text.text = lineToDisplay;
+                }
             }
         }
-    }
 
-    private void StartDialogue()
-    {
-        lineToDisplay = dialogue.Lines[lineIndex];
-
-        StartCoroutine(Delay.TimedEvent(() => {
-            textCoroutine = StartCoroutine(TextWritter(lineToDisplay));
-            isTyping = true;
-        }, 0.2f));
-    }
-
-    private IEnumerator TextWritter(string line)
-    {
-        lineToDisplay = line;
-        isTyping = true;
-
-        for (int i = 0; i <= line.Length; i++)
+        private void StartDialogue()
         {
-            partToDisplay = line[..i];
-            text.text = partToDisplay;
+            lineToDisplay = dialogue.Lines[lineIndex];
 
-            yield return new WaitForSeconds(timeToWait);
+            StartCoroutine(Delay.TimedEvent(() => {
+                textCoroutine = StartCoroutine(TextWritter(lineToDisplay));
+                isTyping = true;
+            }, 0.2f));
         }
 
-        isTyping = false;
-        StopCoroutine(textCoroutine);
+        private IEnumerator TextWritter(string line)
+        {
+            lineToDisplay = line;
+            isTyping = true;
+
+            for (int i = 0; i <= line.Length; i++)
+            {
+                partToDisplay = line[..i];
+                text.text = partToDisplay;
+
+                yield return new WaitForSeconds(timeToWait);
+            }
+
+            isTyping = false;
+            StopCoroutine(textCoroutine);
+        }
     }
 }
