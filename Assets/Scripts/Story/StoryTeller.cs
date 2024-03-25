@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utility;
 
 public class StoryTeller : MonoBehaviour
 {
-    [SerializeField]
-    private Dialogue dialogue;
+    [FormerlySerializedAs("dialogue")] [SerializeField]
+    private Dialogue1 dialogue1;
 
     [SerializeField]
     private Text text;
@@ -43,7 +44,7 @@ public class StoryTeller : MonoBehaviour
 
     private void StartDialogue()
     {
-        lineToDisplay = dialogue.Lines[lineIndex];
+        lineToDisplay = dialogue1.Lines[lineIndex];
 
         StartCoroutine(Delay.TimedEvent(() => {
             textCoroutine = StartCoroutine(TextWritter(lineToDisplay));
