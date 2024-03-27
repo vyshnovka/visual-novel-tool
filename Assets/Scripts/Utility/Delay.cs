@@ -1,29 +1,26 @@
 using System;
-using System.Collections;
-using UnityEngine;
+using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
 namespace Utility
 {
-    //? Not nice that it requires a coroutine to start to call these methods.
     public static class Delay
     {
         /// <summary>Invoke action after given <paramref name="delay"/> in seconds.</summary>
-        public static IEnumerator TimedEvent(Action targetAction, float delay)
+        public static void TimedEvent(Action targetAction, float delay)
         {
-            yield return new WaitForSeconds(delay);
-            targetAction.Invoke();
+            Task.Delay(TimeSpan.FromSeconds(delay)).ContinueWith(_ => targetAction.Invoke());
         }
 
-        public static IEnumerator LoadSceneAfterDelay(string sceneName, float delay)
+        public static async Task LoadSceneAfterDelay(string sceneName, float delay)
         {
-            yield return new WaitForSeconds(delay);
+            await Task.Delay(TimeSpan.FromSeconds(delay));
             SceneManager.LoadScene(sceneName);
         }
 
-        public static IEnumerator LoadSceneAfterDelay(int sceneIndex, float delay)
+        public static async Task LoadSceneAfterDelay(int sceneIndex, float delay)
         {
-            yield return new WaitForSeconds(delay);
+            await Task.Delay(TimeSpan.FromSeconds(delay));
             SceneManager.LoadScene(sceneIndex);
         }
     }

@@ -1,14 +1,15 @@
-using System.Collections;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Utility
+namespace Utility.Extensions
 {
     public static class GameObjectExtensions
     {
         /// <summary>Toggle <paramref name="gameObject"/> active state after given <paramref name="delay"/> in seconds.</summary>
-        public static IEnumerator ToggleActiveAfterDelay(this GameObject gameObject, float delay)
+        public static async Task ToggleActiveAfterDelay(this GameObject gameObject, float delay)
         {
-            yield return new WaitForSeconds(delay);
+            await Task.Delay(TimeSpan.FromSeconds(delay));
             gameObject.SetActive(!gameObject.activeSelf);
         }
     }

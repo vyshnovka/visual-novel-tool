@@ -47,10 +47,10 @@ namespace Story
         {
             lineToDisplay = dialogue.Lines[lineIndex];
 
-            StartCoroutine(Delay.TimedEvent(() => {
+            Delay.TimedEvent(() => {
                 textCoroutine = StartCoroutine(TextWritter(lineToDisplay));
                 isTyping = true;
-            }, 0.2f));
+            }, 0.2f);
         }
 
         private IEnumerator TextWritter(string line)
