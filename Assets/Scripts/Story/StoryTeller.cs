@@ -13,8 +13,7 @@ namespace Story
         [SerializeField]
         private Text text;
 
-        [SerializeField]
-        [Range(0, 5)]
+        [SerializeField, Range(0, 5)]
         private float timeToWait = 0.1f;
 
         private int lineIndex = 0;
